@@ -1,0 +1,16 @@
+.container {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.title {
+  color: #b846ae;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #475467;
+  font-size: 18px;
+}

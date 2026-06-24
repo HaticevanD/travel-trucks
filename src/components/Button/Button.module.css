@@ -1,0 +1,31 @@
+.btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 200px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer; /* Kritik kriter! */
+  transition: background-color 0.2s ease;
+}
+
+/* Şartnamedeki kırmızımsı/turuncu tonları temsil eden ana buton rengi */
+.primary {
+  background-color: #e44848;
+  color: #ffffff;
+}
+
+.primary:hover {
+  background-color: #d13b3b;
+}
+
+/* İkincil buton (Filtreler veya beyaz zeminli butonlar için) */
+.secondary {
+  background-color: transparent;
+  border: 1px solid #rgba(16, 24, 40, 0.2);
+  color: #101828;
+}
+
+.secondary:hover {
+  border-color: #101828;
+}

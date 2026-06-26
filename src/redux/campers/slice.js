@@ -2,60 +2,86 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchCampers } from "./operations";
 
 const initialState = {
-  items: [], // Buranın her zaman dizi kalması şart
+  items: [],
   loading: false,
   error: null,
+
   page: 1,
+
+  total: 0,
   filters: {
     location: "",
     form: "",
-    features: [],
+    engine: "",
+    transmission: "",
+    AC: false,
+    kitchen: false,
+    TV: false,
+    bathroom: false,
   },
+
+  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
 };
 
 const campersSlice = createSlice({
   name: "campers",
   initialState,
   reducers: {
-    setFilters: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload };
+    setFilters(state, action) {
+      state.filters = action.payload;
     },
-    incrementPage: (state) => {
-      state.page += 1;
-    },
-    resetCampersList: (state) => {
-      state.items = []; // Listeyi temizlerken dizi olarak kalmasını garanti ediyoruz
+
+    resetCampersList(state) {
+      state.items = [];
       state.page = 1;
     },
+
+    incrementPage(state) {
+      state.page += 1;
+    },
+
+    toggleFavorite(state, action) {
+      const camperId = action.payload;
+      const isExist = state.favorites.includes(camperId);
+
+      if (isExist) {
+        state.favorites = state.favorites.filter((id) => id !== camperId);
+      } else {
+        state.favorites.push(camperId);
+      }
+
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchCampers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
+
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.loading = false;
 
-        // API'den gelen verinin dizi mi yoksa iç içe geçmiş bir nesne mi olduğunu kontrol ediyoruz
-        // Eğer action.payload bir dizi ise direkt onu alır, değilse içindeki .items dizisini arar.
-        const newItems = Array.isArray(action.payload)
-          ? action.payload
-          : action.payload.items || [];
+        const newItems = action.payload.items;
+        state.total = action.payload.total;
 
-        if (state.page === 1) {
+        if (action.meta.arg?.page === 1) {
           state.items = newItems;
         } else {
           state.items = [...state.items, ...newItems];
         }
       })
+
       .addCase(fetchCampers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload || "Something went wrong";
       });
   },
 });
 
-export const { setFilters, incrementPage, resetCampersList } =
+export const { setFilters, resetCampersList, incrementPage, toggleFavorite } =
   campersSlice.actions;
+
 export const campersReducer = campersSlice.reducer;

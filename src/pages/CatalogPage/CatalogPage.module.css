@@ -1,35 +1,44 @@
-.container {
-  padding: 20px;
+.mainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  box-sizing: border-box;
 }
 
-.title {
-  color: #101828;
-  font-size: 28px;
+.layout {
+  display: flex;
+  gap: 64px;
+  align-items: flex-start;
 }
-/* Butonun etrafındaki sarmalayıcı alan */
+
+.sidebarSection {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.listSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cardsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .loadMoreWrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-  margin-bottom: 60px; /* Sayfa altından tatlı bir boşluk bırakır */
+  margin-top: 16px;
 }
 
-/* Eğer buton bileşenine ek bir stil giydirmek veya 
-   doğrudan CatalogPage içinde özelleştirmek istersen */
-.loadMoreBtn {
-  background-color: transparent;
-  border: 1px solid rgba(16, 24, 40, 0.2);
-  color: #101828;
-  padding: 16px 32px;
+.noResults,
+.loadingText {
+  text-align: center;
+  color: #6c757d;
   font-size: 16px;
-  font-weight: 500;
-  border-radius: 200px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.loadMoreBtn:hover {
-  border-color: #101828;
-  background-color: rgba(16, 24, 40, 0.02);
+  padding: 40px 0;
 }

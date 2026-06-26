@@ -5,28 +5,29 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
-  cursor: pointer; /* Kritik kriter! */
-  transition: background-color 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Şartnamedeki kırmızımsı/turuncu tonları temsil eden ana buton rengi */
 .primary {
-  background-color: #e44848;
+  background-color: #7a9489;
   color: #ffffff;
 }
 
 .primary:hover {
-  background-color: #d13b3b;
+  background-color: #688075; /* Hafif koyu tonu */
 }
 
-/* İkincil buton (Filtreler veya beyaz zeminli butonlar için) */
 .secondary {
-  background-color: transparent;
-  border: 1px solid rgba(16, 24, 40, 0.2); /* rgba kullanımını düzelttik */
+  background-color: #ffffff;
+  border: 1px solid #e4e7ec; /* RGBA hatası düzeltildi, görseldeki net gri sınır */
   color: #101828;
 }
 
 .secondary:hover {
-  border-color: #101828;
-  background-color: rgba(16, 24, 40, 0.02);
+  border-color: #d0d5dd;
+  background-color: #f9fafb;
 }

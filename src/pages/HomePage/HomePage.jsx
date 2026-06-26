@@ -1,34 +1,45 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.css";
 import Container from "../../components/Container/Container";
 import Button from "../../components/Button/Button";
-import Loader from "../../components/Loader/Loader";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleViewNow = () => {
+    navigate("/catalog");
+  };
+
   return (
     <Container>
-      <div className={styles.container}>
-        <h1 className={styles.title}>TravelTrucks - Home</h1>
-        <p className={styles.description}>
-          Find your dream camper for the perfect road trip.
-        </p>
-
-        {/* Butonlarımızı test ediyoruz */}
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "center",
-            margin: "20px 0",
-          }}
-        >
-          <Button variant="primary">View Now</Button>
-          <Button variant="secondary">Explore More</Button>
+      <div className={styles.hero}>
+        {/* Hero Background Image */}
+        <div className={styles.heroBackground}>
+          <img
+            src="https://picsum.photos/id/1015/1920/1080"
+            alt="Camper van at sunset"
+            className={styles.heroImage}
+          />
         </div>
 
-        {/* Loader'ımızı test ediyoruz */}
-        <p style={{ color: "#475467" }}>Testing Loader Component Below:</p>
-        <Loader />
+        {/* Overlay Content */}
+        <div className={styles.heroOverlay}>
+          <div className={styles.heroContent}>
+            <h1 className={styles.title}>Campers of your dreams</h1>
+            <p className={styles.subtitle}>
+              You can find everything you want in our catalog
+            </p>
+
+            <Button
+              variant="primary"
+              onClick={handleViewNow}
+              className={styles.viewNowBtn}
+            >
+              View Now
+            </Button>
+          </div>
+        </div>
       </div>
     </Container>
   );

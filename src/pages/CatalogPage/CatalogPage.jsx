@@ -1,59 +1,76 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCampers } from "../../redux/campers/operations"; // Thunk fonksiyonumuz
-import { incrementPage, resetCampersList } from "../../redux/campers/slice"; // Slice içindeki action'lar
 
-import styles from "./CatalogPage.module.css";
-import Container from "../../components/Container/Container";
-import Loader from "../../components/Loader/Loader";
+import { fetchCampers } from "../../redux/campers/operations";
+import { incrementPage, resetCampersList } from "../../redux/campers/slice";
+
+import Filters from "../../components/Filters/Filters";
 import CamperCard from "../../components/CamperCard/CamperCard";
 import Button from "../../components/Button/Button";
 
+import styles from "./CatalogPage.module.css";
+
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const { items, loading, error, page } = useSelector((state) => state.campers);
 
-  // Sayfa ilk açıldığında listeyi temizle ve 1. sayfayı çek
+  const campers = useSelector((state) => state.campers.items);
+  const isLoading = useSelector((state) => state.campers.loading);
+  const page = useSelector((state) => state.campers.page);
+  const filters = useSelector((state) => state.campers.filters);
+  const total = useSelector((state) => state.campers.total);
+
+  // 1) İlk yükleme + filtre değişince yeniden fetch
   useEffect(() => {
     dispatch(resetCampersList());
-    dispatch(fetchCampers(1));
-  }, [dispatch]);
+    dispatch(fetchCampers({ page: 1, filters }));
+  }, [dispatch, filters]);
 
-  // "Load More" butonuna basıldığında tetiklenecek fonksiyon
+  // 2) Load More (pagination)
   const handleLoadMore = () => {
     const nextPage = page + 1;
-    dispatch(incrementPage()); // Store'daki sayfa numarasını 1 artırır
-    dispatch(fetchCampers(nextPage)); // Yeni sayfayı API'den ister
+
+    dispatch(incrementPage());
+    dispatch(fetchCampers({ page: nextPage, filters }));
   };
 
-  // Eğer mevcut yüklenen veri sayısı 4'ün katıysa ve yükleme devam etmiyorsa butonu göster
-  const showLoadMoreButton =
-    items.length > 0 && items.length % 4 === 0 && !loading;
-
   return (
-    <Container>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Camper Catalog</h1>
+    <div className={styles.mainContainer}>
+      <div className={styles.layout}>
+        {/* Sidebar Filters */}
+        <aside className={styles.sidebarSection}>
+          <Filters />
+        </aside>
 
-        <div style={{ marginTop: "30px" }}>
-          {Array.isArray(items) &&
-            items.map((camper) => (
-              <CamperCard key={camper.id} camper={camper} />
-            ))}
-        </div>
-
-        {loading && <Loader />}
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
-
-        {showLoadMoreButton && (
-          <div className={styles.loadMoreWrapper}>
-            <Button variant="secondary" onClick={handleLoadMore}>
-              Load More
-            </Button>
+        {/* Main Content */}
+        <main className={styles.listSection}>
+          <div className={styles.cardsGrid}>
+            {campers.length > 0 ? (
+              campers.map((camper) => (
+                <CamperCard key={camper.id} camper={camper} />
+              ))
+            ) : !isLoading ? (
+              <p className={styles.noResults}>
+                No campers found matching your criteria.
+              </p>
+            ) : null}
           </div>
-        )}
+
+          {/* Loading */}
+          {isLoading && (
+            <p className={styles.loadingText}>Loading campers...</p>
+          )}
+
+          {/* Load More Button */}
+          {campers.length > 0 && campers.length < total && !isLoading && (
+            <div className={styles.loadMoreWrapper}>
+              <Button variant="secondary" onClick={handleLoadMore}>
+                Load More
+              </Button>
+            </div>
+          )}
+        </main>
       </div>
-    </Container>
+    </div>
   );
 };
 

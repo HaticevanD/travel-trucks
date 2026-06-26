@@ -1,24 +1,26 @@
 .card {
-  border: 1px solid rgba(16, 24, 40, 0.2);
+  display: flex;
+  background: #ffffff;
+  border: 1px solid #e4e7ec;
   border-radius: 20px;
   padding: 24px;
-  display: flex;
   gap: 24px;
-  background-color: #ffffff;
-  margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .imageWrapper {
   width: 290px;
   height: 310px;
   flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
 }
 
 .content {
@@ -54,27 +56,33 @@
 }
 
 .favBtn {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 24px;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.favBtn:hover {
+  transform: scale(1.15);
 }
 
 .infoRow {
   display: flex;
   gap: 16px;
-  margin-bottom: 24px;
   font-size: 16px;
   color: #101828;
+  margin-bottom: 24px;
 }
 
 .description {
-  color: #475467;
   font-size: 16px;
+  color: #475467;
   line-height: 1.5;
   margin: 0 0 24px 0;
-  /* Metni 1 satırda sınırlayıp taşan kısmı üç nokta yapmak için */
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -89,6 +97,8 @@
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
   background-color: #f2f4f7;
   padding: 12px 18px;
   border-radius: 100px;
@@ -96,4 +106,10 @@
   font-weight: 500;
   color: #101828;
   text-transform: capitalize;
+}
+
+.actionWrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-start;
 }

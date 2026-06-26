@@ -22,10 +22,11 @@
 /* İkincil buton (Filtreler veya beyaz zeminli butonlar için) */
 .secondary {
   background-color: transparent;
-  border: 1px solid #rgba(16, 24, 40, 0.2);
+  border: 1px solid rgba(16, 24, 40, 0.2); /* rgba kullanımını düzelttik */
   color: #101828;
 }
 
 .secondary:hover {
   border-color: #101828;
+  background-color: rgba(16, 24, 40, 0.02);
 }

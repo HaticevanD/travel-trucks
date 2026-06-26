@@ -10,6 +10,7 @@ const Button = ({
   return (
     <button
       type={type}
+      // Class'ları güvenli bir şekilde birleştiriyoruz
       className={`${styles.btn} ${styles[variant]}`}
       onClick={onClick}
     >

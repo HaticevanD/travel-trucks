@@ -6,3 +6,30 @@
   color: #101828;
   font-size: 28px;
 }
+/* Butonun etrafındaki sarmalayıcı alan */
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 60px; /* Sayfa altından tatlı bir boşluk bırakır */
+}
+
+/* Eğer buton bileşenine ek bir stil giydirmek veya 
+   doğrudan CatalogPage içinde özelleştirmek istersen */
+.loadMoreBtn {
+  background-color: transparent;
+  border: 1px solid rgba(16, 24, 40, 0.2);
+  color: #101828;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 200px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.loadMoreBtn:hover {
+  border-color: #101828;
+  background-color: rgba(16, 24, 40, 0.02);
+}

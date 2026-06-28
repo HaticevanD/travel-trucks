@@ -1,0 +1,54 @@
+.mainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 600;
+  color: #101828;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #f2f4f7;
+  padding-bottom: 16px;
+}
+
+.listSection {
+  width: 100%;
+}
+
+.cardsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Kartların alt alta pürüzsüz boşlukla dizilmesi için */
+}
+
+/* Eğer kartları yan yana grid düzeninde listelemek istersen alternatif: */
+/* 
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+} 
+*/
+
+.loadingText {
+  font-size: 18px;
+  color: #475467;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.noResults {
+  text-align: center;
+  font-size: 18px;
+  color: #667085;
+  background-color: #f9fafb;
+  border: 1px dashed #d0d5dd;
+  border-radius: 12px;
+  padding: 60px 20px;
+  margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}

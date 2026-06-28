@@ -1,25 +1,29 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toggleFavorite } from "../../redux/campers/slice";
 import Button from "../Button/Button";
 import styles from "./CamperCard.module.css";
 
 const CamperCard = ({ camper }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const favorites = useSelector((state) => state.campers.favorites || []);
 
-  const isFavorite = favorites.includes(camper.id);
-  const formattedPrice = Number(camper.price).toFixed(2);
+  // API'den dönen veride 'id' veya '_id' olma ihtimaline karşı güvenli kimlik tespiti
+  const camperId = camper.id || camper._id;
 
-  // Yeni sekmede detay sayfasını açma fonksiyonu
-  const handleShowMore = () => {
-    const detailUrl = `${window.location.origin}/catalog/${camper.id}`;
-    window.open(detailUrl, "_blank");
-  };
+  const isFavorite = favorites.includes(camperId);
+  const formattedPrice = Number(camper.price).toFixed(2);
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-    dispatch(toggleFavorite(camper.id));
+    dispatch(toggleFavorite(camperId));
+  };
+
+  const handleShowMore = () => {
+    // Navigate kullanarak güvenli yönlendirme
+    navigate(`/catalog/${camperId}`);
   };
 
   return (
@@ -39,7 +43,6 @@ const CamperCard = ({ camper }) => {
 
       {/* Sağ Alan: İçerik Detayları */}
       <div className={styles.content}>
-        {/* Başlık, Fiyat ve Favori Butonu */}
         <div className={styles.header}>
           <h2 className={styles.title}>{camper.name}</h2>
           <div className={styles.priceWrapper}>
@@ -57,7 +60,6 @@ const CamperCard = ({ camper }) => {
                 fill={isFavorite ? "#E74C3C" : "none"}
                 stroke={isFavorite ? "#E74C3C" : "#101828"}
                 strokeWidth="2"
-                transition="all 0.2s ease"
               >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
               </svg>
@@ -65,7 +67,6 @@ const CamperCard = ({ camper }) => {
           </div>
         </div>
 
-        {/* Değerlendirme ve Konum */}
         <div className={styles.infoRow}>
           <span className={styles.rating}>
             ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
@@ -73,10 +74,8 @@ const CamperCard = ({ camper }) => {
           <span className={styles.location}>📍 {camper.location}</span>
         </div>
 
-        {/* Açıklama Metni */}
         <p className={styles.description}>{camper.description}</p>
 
-        {/* Özellik Rozetleri */}
         <div className={styles.categories}>
           {camper.transmission && (
             <span className={styles.badge}>{camper.transmission}</span>
@@ -90,7 +89,7 @@ const CamperCard = ({ camper }) => {
           {camper.TV && <span className={styles.badge}>TV</span>}
         </div>
 
-        {/* Detay Sayfası Butonu */}
+        {/* Button bileşenine sadık kalan yapı */}
         <div className={styles.actionWrapper}>
           <Button variant="primary" onClick={handleShowMore}>
             Show More

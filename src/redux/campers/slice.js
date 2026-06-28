@@ -5,9 +5,7 @@ const initialState = {
   items: [],
   loading: false,
   error: null,
-
   page: 1,
-
   total: 0,
   filters: {
     location: "",
@@ -19,7 +17,6 @@ const initialState = {
     TV: false,
     bathroom: false,
   },
-
   favorites: JSON.parse(localStorage.getItem("favorites")) || [],
 };
 
@@ -30,16 +27,13 @@ const campersSlice = createSlice({
     setFilters(state, action) {
       state.filters = action.payload;
     },
-
     resetCampersList(state) {
       state.items = [];
       state.page = 1;
     },
-
     incrementPage(state) {
       state.page += 1;
     },
-
     toggleFavorite(state, action) {
       const camperId = action.payload;
       const isExist = state.favorites.includes(camperId);
@@ -49,7 +43,6 @@ const campersSlice = createSlice({
       } else {
         state.favorites.push(camperId);
       }
-
       localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
   },
@@ -60,20 +53,28 @@ const campersSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.loading = false;
-
-        const newItems = action.payload.items;
         state.total = action.payload.total;
 
+        // 🚨 VERİ DÜZENLEME: API'den gelen _id'leri id'ye eşitleyelim
+        // Böylece UI tarafında her zaman 'id' kullanabilirsin
+        const normalizedItems = action.payload.items.map((item) => ({
+          ...item,
+          id: item.id || item._id,
+        }));
+
         if (action.meta.arg?.page === 1) {
-          state.items = newItems;
+          state.items = normalizedItems;
         } else {
-          state.items = [...state.items, ...newItems];
+          // Çift kayıt oluşmaması için basit bir kontrol
+          const existingIds = new Set(state.items.map((i) => i.id));
+          const uniqueNewItems = normalizedItems.filter(
+            (item) => !existingIds.has(item.id),
+          );
+          state.items = [...state.items, ...uniqueNewItems];
         }
       })
-
       .addCase(fetchCampers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Something went wrong";

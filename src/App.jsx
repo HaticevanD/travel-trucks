@@ -1,36 +1,44 @@
-import { Routes, Route, Link } from "react-router-dom";
-import CamperDetailsPage from "./pages/CamperDetailsPage/CamperDetailsPage";
-import CatalogPage from "./pages/CatalogPage/CatalogPage";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header/Header"; // Yeni oluşturduğumuz Header'ı import ettik
 import HomePage from "./pages/HomePage/HomePage";
+import CatalogPage from "./pages/CatalogPage/CatalogPage";
+import CamperDetailsPage from "./pages/CamperDetailsPage/CamperDetailsPage";
+import FavoritesPage from "./pages/FavoritesPage/FavoritesPage";
 
 import "./App.css";
 
 function App() {
   return (
     <div>
-      {/* Kolayca test edebilmek için geçici bir Navigasyon Menüsü ekleyelim */}
-      <nav
-        style={{
-          padding: "10px",
-          background: "#f0f0f0",
-          display: "flex",
-          gap: "15px",
-        }}
-      >
-        <Link to="/">Home</Link>
-        <Link to="/catalog">Catalog</Link>
-      </nav>
+      {/* Tüm sayfalarda en tepede görünecek modern Header componenti */}
+      <Header />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
-        <Route path="/catalog/:id" element={<CamperDetailsPage />} />
-        {/* Tanımlanmayan bir sayfaya gidilirse 404 göstermek için */}
-        <Route
-          path="*"
-          element={<div style={{ padding: "20px" }}>Page Not Found!</div>}
-        />
-      </Routes>
+      {/* Sayfa İçerikleri ve Rotalar */}
+      <main style={{ minHeight: "calc(100vh - 70px)" }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/catalog/:id" element={<CamperDetailsPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+
+          {/* 404 - Sayfa Bulunamadı Durumu */}
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  padding: "40px",
+                  textAlign: "center",
+                  fontSize: "18px",
+                }}
+              >
+                <h2>404 - Page Not Found!</h2>
+                <p>The page you are looking for does not exist.</p>
+              </div>
+            }
+          />
+        </Routes>
+      </main>
     </div>
   );
 }

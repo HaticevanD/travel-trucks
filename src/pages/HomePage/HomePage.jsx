@@ -2,45 +2,40 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.css";
 import Container from "../../components/Container/Container";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button/Button"; // Kendi Button bileşenini kullanıyoruz
+
+import hero1x from "../../assets/hero.jpg";
+import hero2x from "../../assets/hero@2x.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const handleViewNow = () => {
-    navigate("/catalog");
-  };
-
   return (
     <Container>
-      <div className={styles.hero}>
-        {/* Hero Background Image */}
-        <div className={styles.heroBackground}>
-          <img
-            src="https://picsum.photos/id/1015/1920/1080"
-            alt="Camper van at sunset"
-            className={styles.heroImage}
-          />
-        </div>
+      <section className={styles.uniqueHeroBox}>
+        {/* Arka Plan Görseli */}
+        <img
+          src={hero1x}
+          srcSet={`${hero1x} 1x, ${hero2x} 2x`}
+          alt="Campers of your dreams"
+          className={styles.uniqueHeroImg}
+          loading="eager"
+        />
+        {/* Karartma Katmanı */}
+        <div className={styles.uniqueHeroMask} />
 
-        {/* Overlay Content */}
-        <div className={styles.heroOverlay}>
-          <div className={styles.heroContent}>
-            <h1 className={styles.title}>Campers of your dreams</h1>
-            <p className={styles.subtitle}>
-              You can find everything you want in our catalog
-            </p>
+        {/* Metin ve Buton İçeriği */}
+        <div className={styles.uniqueHeroContent}>
+          <h1 className={styles.uniqueHeroTitle}>Campers of your dreams</h1>
+          <p className={styles.uniqueHeroSubtitle}>
+            You can find everything you want in our catalog
+          </p>
 
-            <Button
-              variant="primary"
-              onClick={handleViewNow}
-              className={styles.viewNowBtn}
-            >
-              View Now
-            </Button>
-          </div>
+          <Button variant="primary" onClick={() => navigate("/catalog")}>
+            View Now
+          </Button>
         </div>
-      </div>
+      </section>
     </Container>
   );
 };

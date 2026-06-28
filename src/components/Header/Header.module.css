@@ -1,0 +1,52 @@
+.headerWrapper {
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: 1px solid #dadde1;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 600;
+  color: #101828;
+  text-decoration: none;
+}
+
+.logoAccent {
+  color: #d84343;
+}
+
+.headerNav {
+  display: flex;
+  gap: 40px;
+}
+
+.navLink {
+  font-size: 16px;
+  font-weight: 600;
+  color: #101828;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navLink:hover,
+.activeLink {
+  color: #d84343;
+}
+
+.favBadge {
+  background-color: #d84343;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 5px;
+}

@@ -4,6 +4,7 @@ import { setFilters, resetCampersList } from "../../redux/campers/slice";
 import { fetchCampers } from "../../redux/campers/operations";
 import styles from "./Filters.module.css";
 import Button from "../Button/Button";
+import { HiOutlineMapPin } from "react-icons/hi2";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Filters = () => {
     globalFilters?.transmission || "",
   );
 
-  const [isOpen, setIsOpen] = useState(false); // Mobile
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSearch = () => {
     const newFilters = { location, form, engine, transmission };
@@ -45,7 +46,6 @@ const Filters = () => {
 
   return (
     <div className={styles.sidebar}>
-      {/* Mobil Başlık + Toggle */}
       <div className={styles.filterHeader} onClick={() => setIsOpen(!isOpen)}>
         <h2 className={styles.filterTitle}>Filters</h2>
         <span className={`${styles.arrow} ${isOpen ? styles.open : ""}`}>
@@ -54,9 +54,10 @@ const Filters = () => {
       </div>
 
       <div className={`${styles.filterContent} ${isOpen ? styles.open : ""}`}>
-        {/* Location */}
-        <div className={styles.locationSection}>
-          <label className={styles.label}>Location</label>
+        {/* Location Section - Güncellenmiş yapı */}
+        <h3 className={styles.sectionTitle}>Location</h3>
+        <div className={styles.inputWrapper}>
+          <HiOutlineMapPin className={styles.inputIcon} size={18} />
           <input
             type="text"
             className={styles.input}
@@ -66,8 +67,8 @@ const Filters = () => {
           />
         </div>
 
+        {/* Filter Groups */}
         <div className={styles.filterGroupWrapper}>
-          {/* Camper Form */}
           <h3 className={styles.sectionTitle}>Camper form</h3>
           <div className={styles.listStack}>
             {[
@@ -90,7 +91,6 @@ const Filters = () => {
             ))}
           </div>
 
-          {/* Engine */}
           <h3 className={styles.sectionTitle}>Engine</h3>
           <div className={styles.listStack}>
             {[
@@ -112,7 +112,6 @@ const Filters = () => {
             ))}
           </div>
 
-          {/* Transmission */}
           <h3 className={styles.sectionTitle}>Transmission</h3>
           <div className={styles.listStack}>
             {[
@@ -136,18 +135,16 @@ const Filters = () => {
           </div>
         </div>
 
-        {/* Butons */}
         <div className={styles.actionWrapper}>
           <Button variant="primary" onClick={handleSearch}>
             Search
           </Button>
-          <button
-            type="button"
-            className={styles.clearBtn}
+          <Button
+            className={`${styles.btn} ${styles.secondary}`}
             onClick={handleClearFilters}
           >
-            <span className={styles.clearIcon}>×</span> Clear Filters
-          </button>
+            X Clear filters
+          </Button>
         </div>
       </div>
     </div>

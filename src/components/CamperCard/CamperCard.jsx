@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleFavorite } from "../../redux/campers/slice";
 import Button from "../Button/Button";
+import { HiOutlineMapPin, HiOutlineCog6Tooth } from "react-icons/hi2";
+import { FaGasPump } from "react-icons/fa";
+import { BsGrid3X3Gap } from "react-icons/bs";
+
 import styles from "./CamperCard.module.css";
 
 const CamperCard = ({ camper }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // favorites from Redux state
   const favorites = useSelector((state) => state.campers.favorites || []);
 
   const camperId = String(camper.id || camper._id);
@@ -17,12 +20,22 @@ const CamperCard = ({ camper }) => {
   const formattedPrice = Number(camper.price).toFixed(2);
 
   const handleFavoriteClick = (e) => {
-    e.stopPropagation(); // Stop cart conflicts
+    e.stopPropagation();
     dispatch(toggleFavorite(camperId));
   };
 
   const handleShowMore = () => {
     navigate(`/catalog/${camperId}`);
+  };
+
+  // Helper: Form verisini kullanıcı dostu formata çevirme
+  const getFormLabel = (form) => {
+    if (!form) return "";
+    return form === "panelTruck"
+      ? "Panel Van"
+      : form === "fullyIntegrated"
+        ? "Fully Integrated"
+        : form.charAt(0).toUpperCase() + form.slice(1);
   };
 
   return (
@@ -65,35 +78,39 @@ const CamperCard = ({ camper }) => {
           </div>
         </div>
 
-        {/* Rating ve Lokasyon */}
         <div className={styles.infoRow}>
           <span className={styles.rating}>
             ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
           </span>
-          <span className={styles.location}>📍 {camper.location}</span>
+          <span className={styles.location}>
+            <HiOutlineMapPin size={16} /> {camper.location}
+          </span>
         </div>
 
-        {/* Kısa Açıklama */}
         <p className={styles.description}>{camper.description}</p>
 
-        {/* Özellikler (Badges) */}
+        {/* Sadece 3 Temel Özellik (Form, Transmission, Engine) */}
         <div className={styles.categories}>
+          {camper.form && (
+            <span className={styles.badge}>
+              <BsGrid3X3Gap size={18} /> {getFormLabel(camper.form)}
+            </span>
+          )}
           {camper.transmission && (
-            <span className={styles.badge}>{camper.transmission}</span>
+            <span className={styles.badge}>
+              <HiOutlineCog6Tooth size={18} /> {camper.transmission}
+            </span>
           )}
           {camper.engine && (
-            <span className={styles.badge}>{camper.engine}</span>
+            <span className={styles.badge}>
+              <FaGasPump size={18} /> {camper.engine}
+            </span>
           )}
-          {camper.AC && <span className={styles.badge}>AC</span>}
-          {camper.kitchen && <span className={styles.badge}>Kitchen</span>}
-          {camper.bathroom && <span className={styles.badge}>Bathroom</span>}
-          {camper.TV && <span className={styles.badge}>TV</span>}
         </div>
 
-        {/* Eylem Butonu */}
         <div className={styles.actionWrapper}>
           <Button variant="primary" onClick={handleShowMore}>
-            Show More
+            Show more
           </Button>
         </div>
       </div>

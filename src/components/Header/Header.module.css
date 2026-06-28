@@ -12,14 +12,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 /* Logo */
 .logoText {
   font-size: 22px;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   color: #101828;
   text-decoration: none;
@@ -71,11 +70,11 @@
 
 .navLink:hover,
 .activeLink {
-  color: #d84343;
+  color: #829b91;
 }
 
 .favBadge {
-  background-color: #d84343;
+  background-color: #829b91;
   color: white;
   padding: 2px 7px;
   border-radius: 50%;

@@ -1,6 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCampers } from "./operations";
 
+const getInitialFavorites = () => {
+  const saved = localStorage.getItem("favorites");
+  if (!saved) return [];
+  try {
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.error("LocalStorage favori verisi hatalı, temizleniyor:", e);
+    return [];
+  }
+};
+
 const initialState = {
   items: [],
   loading: false,
@@ -17,7 +29,7 @@ const initialState = {
     TV: false,
     bathroom: false,
   },
-  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+  favorites: getInitialFavorites(),
 };
 
 const campersSlice = createSlice({
@@ -35,18 +47,15 @@ const campersSlice = createSlice({
       state.page += 1;
     },
     toggleFavorite(state, action) {
-      const camperId = action.payload;
-      const isExist = state.favorites.includes(camperId);
-
-      if (isExist) {
+      const camperId = String(action.payload);
+      if (state.favorites.includes(camperId)) {
         state.favorites = state.favorites.filter((id) => id !== camperId);
       } else {
-        state.favorites.push(camperId);
+        state.favorites = [...state.favorites, camperId];
       }
       localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchCampers.pending, (state) => {
@@ -57,22 +66,20 @@ const campersSlice = createSlice({
         state.loading = false;
         state.total = action.payload.total;
 
-        // 🚨 VERİ DÜZENLEME: API'den gelen _id'leri id'ye eşitleyelim
-        // Böylece UI tarafında her zaman 'id' kullanabilirsin
         const normalizedItems = action.payload.items.map((item) => ({
           ...item,
-          id: item.id || item._id,
+          id: String(item.id || item._id),
         }));
-
-        if (action.meta.arg?.page === 1) {
+        if (action.payload.isFetchAll) {
+          state.items = normalizedItems;
+        } else if (action.meta.arg?.page === 1 || action.meta.arg === 1) {
           state.items = normalizedItems;
         } else {
-          // Çift kayıt oluşmaması için basit bir kontrol
           const existingIds = new Set(state.items.map((i) => i.id));
-          const uniqueNewItems = normalizedItems.filter(
-            (item) => !existingIds.has(item.id),
-          );
-          state.items = [...state.items, ...uniqueNewItems];
+          state.items = [
+            ...state.items,
+            ...normalizedItems.filter((item) => !existingIds.has(item.id)),
+          ];
         }
       })
       .addCase(fetchCampers.rejected, (state, action) => {

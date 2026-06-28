@@ -1,26 +1,35 @@
 .mainContainer {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 40px 24px;
-  box-sizing: border-box;
+  padding: 32px 20px;
+  box-sizing: border-box; 
 }
 
+/* ===================== LAYOUT ===================== */
 .layout {
   display: flex;
-  gap: 64px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .sidebarSection {
-  width: 260px;
+  width: 100%;
   flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* SIDEBAR */
+
+.sidebarSection input,
+.sidebarSection select,
+.sidebarSection div[class*="inputWrapper"] {
+  width: 100%;
+  box-sizing: border-box; 
 }
 
 .listSection {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  min-width: 0; 
 }
 
 .cardsGrid {
@@ -29,10 +38,11 @@
   gap: 24px;
 }
 
+/* Load More */
 .loadMoreWrapper {
   display: flex;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
 .noResults,
@@ -40,5 +50,47 @@
   text-align: center;
   color: #6c757d;
   font-size: 16px;
-  padding: 40px 0;
+  padding: 60px 20px;
+  font-weight: 500;
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+/* Tablet (768px - 1279px) */
+@media (min-width: 768px) {
+  .mainContainer {
+    padding: 40px 40px;
+  }
+
+  .layout {
+    flex-direction: row;
+    gap: 48px;
+  }
+
+  .sidebarSection {
+    width: 250px; 
+  }
+
+  .cardsGrid {
+    gap: 28px;
+  }
+}
+
+/* Desktop (>= 1280px) */
+@media (min-width: 1280px) {
+  .mainContainer {
+    padding: 48px 64px;
+  }
+
+  .layout {
+    gap: 64px;
+  }
+
+  .sidebarSection {
+    width: 300px;
+  }
+
+  .cardsGrid {
+    gap: 32px;
+  }
 }

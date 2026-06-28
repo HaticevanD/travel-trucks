@@ -1,61 +1,53 @@
 .container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 32px 20px;
   font-family: "Inter", sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
 }
 
-/* Üst Bölüm: Foto ve Detayların Yan Yana Eşit Uzunlukta Bitmesi İçin */
+/* ===================== TOP SECTION ===================== */
 .topSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: stretch; /* İçeriklerin alt çizgilerini eşitler */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-/* Alt Bölüm: Reviews ve Formun Tam Yan Yana Kusursuz Durması İçin */
-.bottomSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: start;
-}
-
-/* SOL ÜST: Galeri Düzenlemeleri */
 .galleryWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Küçük fotoları alt çizgiye tam yaslar */
-  height: 100%; /* Sağ taraftaki bloğun yüksekliğine uyum sağlar */
+  width: 100%;
 }
 
 .mainImageWrapper {
   width: 100%;
-  height: 420px; /* Görseldeki geniş hacimli kutu derinliği */
-  border-radius: 12px;
+  height: 380px;
+  border-radius: 16px;
   overflow: hidden;
+  background-color: #f2f4f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .mainImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
-/* ➔ Fotoğrafların tam sığması ve kesilmemesi için grid yapısı korundu */
 .thumbnailsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 12px;
   margin-top: 16px;
+  width: 100%;
 }
 
 .thumbnail {
   width: 100%;
-  height: 110px; /* Hepsinin tam gözükmesi için yükseklik dengelendi */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
@@ -64,64 +56,57 @@
 }
 
 .activeThumbnail {
-  border-color: #829b8c;
+  border-color: #7a9489;
 }
 
-/* SAĞ ÜST: Sola Yatık Karavan Bilgileri */
 .infoWrapper {
   display: flex;
   flex-direction: column;
-  text-align: left; /* Tümü sola yatık */
-  justify-content: space-between;
+  text-align: left;
 }
 
 .cardHeader {
-  text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: #101828;
   margin: 0 0 12px 0;
-  text-align: left;
 }
 
 .metaRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   font-size: 15px;
   color: #101828;
   margin-bottom: 16px;
 }
 
-/* ➔ Favori Yıldızı Tam Sarı Yapıldı */
 .starYellow {
   color: #ffb400;
 }
 
 .price {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   color: #101828;
-  text-align: left;
+  margin-bottom: 16px;
 }
 
 .description {
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: #475467;
-  text-align: left;
-  margin: 0 0 24px 0;
+  margin-bottom: 28px;
 }
 
-/* Vehicle Details Alanı Sola Yatık */
 .vehicleDetailsBlock {
   background-color: #f9fafb;
   padding: 24px;
-  border-radius: 12px;
-  text-align: left;
+  border-radius: 16px;
 }
 
 .sectionTitle {
@@ -129,7 +114,6 @@
   font-weight: 600;
   color: #101828;
   margin: 0 0 20px 0;
-  text-align: left;
 }
 
 .badgesRow {
@@ -164,10 +148,24 @@
   color: #101828;
 }
 
-/* SOL ALT: Sola Yatık Yorumlar Bölümü */
-.reviewsWrapper {
-  text-align: left;
+/* ===================== BOTTOM SECTION ===================== */
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.reviewsWrapper,
+.formWrapper {
   width: 100%;
+}
+
+.formWrapper {
+  border: 1px solid #eaecf0;
+  border-radius: 16px;
+  padding: 32px;
+  background-color: #ffffff;
+  align-self: flex-start;
 }
 
 .sectionTitleLeft {
@@ -175,17 +173,19 @@
   font-weight: 600;
   color: #101828;
   margin: 0 0 24px 0;
-  text-align: left;
 }
 
 .reviewsList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .reviewCard {
-  text-align: left;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eaecf0;
 }
 
 .reviewHeader {
@@ -193,10 +193,6 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 14px;
-}
-
-.reviewerInfo {
-  text-align: left;
 }
 
 .avatar {
@@ -209,6 +205,7 @@
   justify-content: center;
   border-radius: 50%;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .reviewerName {
@@ -219,7 +216,7 @@
 }
 
 .stars {
-  color: #ffb400; /* Yorumlardaki yıldızlar da sarı yapıldı */
+  color: #ffb400;
   letter-spacing: 2px;
 }
 
@@ -230,17 +227,8 @@
   margin: 0;
 }
 
-/* SAĞ ALT: Rezervasyon Formu Kutusu */
-.formWrapper {
-  border: 1px solid #eaecf0;
-  border-radius: 12px;
-  padding: 32px;
-  background-color: #ffffff;
-  text-align: left;
-}
-
 .formTitle {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
   color: #101828;
   margin: 0 0 8px 0;
@@ -249,23 +237,28 @@
 .formSubtitle {
   font-size: 15px;
   color: #475467;
-  margin: 0 0 24px 0;
+  margin: 0 0 28px 0;
 }
 
 .bookingForm {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .inputField {
   width: 100%;
   background-color: #f9fafb;
-  border: 1px solid transparent;
+  border: 1px solid #e4e7ec;
   border-radius: 10px;
   padding: 16px;
-  font-size: 15px;
+  font-size: 16px;
   box-sizing: border-box;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #7a9489;
 }
 
 .submitBtn {
@@ -273,15 +266,80 @@
   color: white;
   border: none;
   border-radius: 100px;
-  padding: 16px;
+  padding: 16px 32px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 8px;
+  transition: background-color 0.25s;
+  width: auto;
+  min-width: 160px;
+  align-self: flex-start;
 }
 
-.loading,
-.error {
-  text-align: center;
-  padding: 100px;
+.submitBtn:hover {
+  background-color: #688075;
+}
+
+/* ===================== RESPONSIVE - MOBIL FIRST ===================== */
+
+@media (min-width: 768px) {
+  .container {
+    padding: 40px 40px;
+  }
+
+  .topSection {
+    gap: 40px;
+  }
+
+  .mainImageWrapper {
+    height: 420px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .submitBtn {
+    align-self: stretch;
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding: 48px 64px;
+  }
+
+  .topSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: stretch;
+  }
+
+  .bottomSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .mainImageWrapper {
+    height: 460px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .price {
+    font-size: 30px;
+  }
+
+  .formWrapper {
+    align-self: stretch;
+    margin-top: 52px;
+  }
 }

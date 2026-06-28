@@ -8,32 +8,29 @@ import styles from "./CamperCard.module.css";
 const CamperCard = ({ camper }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // favorites from Redux state
   const favorites = useSelector((state) => state.campers.favorites || []);
 
-  // API'den dönen veride 'id' veya '_id' olma ihtimaline karşı güvenli kimlik tespiti
-  const camperId = camper.id || camper._id;
-
+  const camperId = String(camper.id || camper._id);
   const isFavorite = favorites.includes(camperId);
   const formattedPrice = Number(camper.price).toFixed(2);
 
   const handleFavoriteClick = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Stop cart conflicts
     dispatch(toggleFavorite(camperId));
   };
 
   const handleShowMore = () => {
-    // Navigate kullanarak güvenli yönlendirme
     navigate(`/catalog/${camperId}`);
   };
 
   return (
     <div className={styles.card}>
-      {/* Sol Alan: Görsel */}
       <div className={styles.imageWrapper}>
         <img
           src={
             camper.gallery?.[0]?.thumb ||
-            camper.gallery?.[0] ||
             "https://via.placeholder.com/290x310?text=No+Image"
           }
           alt={camper.name}
@@ -41,7 +38,6 @@ const CamperCard = ({ camper }) => {
         />
       </div>
 
-      {/* Sağ Alan: İçerik Detayları */}
       <div className={styles.content}>
         <div className={styles.header}>
           <h2 className={styles.title}>{camper.name}</h2>
@@ -51,7 +47,9 @@ const CamperCard = ({ camper }) => {
               className={styles.favBtn}
               type="button"
               onClick={handleFavoriteClick}
-              aria-label="Toggle Favorite"
+              aria-label={
+                isFavorite ? "Remove from favorites" : "Add to favorites"
+              }
             >
               <svg
                 width="24"
@@ -67,6 +65,7 @@ const CamperCard = ({ camper }) => {
           </div>
         </div>
 
+        {/* Rating ve Lokasyon */}
         <div className={styles.infoRow}>
           <span className={styles.rating}>
             ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
@@ -74,8 +73,10 @@ const CamperCard = ({ camper }) => {
           <span className={styles.location}>📍 {camper.location}</span>
         </div>
 
+        {/* Kısa Açıklama */}
         <p className={styles.description}>{camper.description}</p>
 
+        {/* Özellikler (Badges) */}
         <div className={styles.categories}>
           {camper.transmission && (
             <span className={styles.badge}>{camper.transmission}</span>
@@ -89,7 +90,7 @@ const CamperCard = ({ camper }) => {
           {camper.TV && <span className={styles.badge}>TV</span>}
         </div>
 
-        {/* Button bileşenine sadık kalan yapı */}
+        {/* Eylem Butonu */}
         <div className={styles.actionWrapper}>
           <Button variant="primary" onClick={handleShowMore}>
             Show More

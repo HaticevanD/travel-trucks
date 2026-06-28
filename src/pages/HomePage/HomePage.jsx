@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.css";
 import Container from "../../components/Container/Container";
-import Button from "../../components/Button/Button"; // Kendi Button bileşenini kullanıyoruz
+import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader";
 
 import hero1x from "../../assets/hero.jpg";
 import hero2x from "../../assets/hero@2x.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsPageLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isPageLoading) return <Loader />;
 
   return (
     <Container>
@@ -21,6 +30,7 @@ const HomePage = () => {
           className={styles.uniqueHeroImg}
           loading="eager"
         />
+
         {/* Karartma Katmanı */}
         <div className={styles.uniqueHeroMask} />
 
@@ -30,7 +40,6 @@ const HomePage = () => {
           <p className={styles.uniqueHeroSubtitle}>
             You can find everything you want in our catalog
           </p>
-
           <Button variant="primary" onClick={() => navigate("/catalog")}>
             View Now
           </Button>

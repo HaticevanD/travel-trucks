@@ -10,10 +10,9 @@ import "./App.css";
 function App() {
   return (
     <div>
-      {/* Tüm sayfalarda en tepede görünecek modern Header componenti */}
       <Header />
 
-      {/* Sayfa İçerikleri ve Rotalar */}
+      {/* Contents and Routes */}
       <main style={{ minHeight: "calc(100vh - 70px)" }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -21,7 +20,7 @@ function App() {
           <Route path="/catalog/:id" element={<CamperDetailsPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
 
-          {/* 404 - Sayfa Bulunamadı Durumu */}
+          {/* 404  */}
           <Route
             path="*"
             element={

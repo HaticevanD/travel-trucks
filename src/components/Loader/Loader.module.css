@@ -3,13 +3,14 @@
   justify-content: center;
   align-items: center;
   padding: 40px 0;
+  width: 100%;
 }
 
 .spinner {
   width: 48px;
   height: 48px;
   border: 5px solid #f2f4f7;
-  border-bottom-color: #e44848; /* Ana rengimiz */
+  border-bottom-color: #e44848;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -17,10 +18,6 @@
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

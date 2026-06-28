@@ -20,17 +20,8 @@
 .cardsGrid {
   display: flex;
   flex-direction: column;
-  gap: 24px; /* Kartların alt alta pürüzsüz boşlukla dizilmesi için */
-}
-
-/* Eğer kartları yan yana grid düzeninde listelemek istersen alternatif: */
-/* 
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 24px;
-} 
-*/
+}
 
 .loadingText {
   font-size: 18px;

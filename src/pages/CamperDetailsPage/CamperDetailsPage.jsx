@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCampers } from "../../redux/campers/operations";
+import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader"; 
 import styles from "./CamperDetailsPage.module.css";
 
 const CamperDetailsPage = () => {
@@ -14,15 +16,20 @@ const CamperDetailsPage = () => {
 
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   useEffect(() => {
+
     if (allCampers.length === 0) {
       dispatch(fetchCampers());
     }
+
+    const timer = setTimeout(() => setIsPageLoading(false), 500);
+    return () => clearTimeout(timer);
   }, [dispatch, allCampers.length]);
 
-  if (isLoading)
-    return <div className={styles.loading}>Loading camper details...</div>;
+  if (isLoading || isPageLoading) return <Loader />;
+
   if (!camper) return <div className={styles.error}>Camper not found!</div>;
 
   const handleFormSubmit = (e) => {
@@ -33,9 +40,8 @@ const CamperDetailsPage = () => {
 
   return (
     <div className={styles.container}>
-      {/* ÜST BÖLÜM: Sol Galeri - Sağ Detaylar (Aynı yükseklikte bitecek şekilde) */}
+      {/* ÜST BÖLÜM: Galeri ve Bilgiler */}
       <div className={styles.topSection}>
-        {/* Sol Sütun Üst: Galeri */}
         <div className={styles.galleryWrapper}>
           <div className={styles.mainImageWrapper}>
             <img
@@ -60,19 +66,19 @@ const CamperDetailsPage = () => {
           </div>
         </div>
 
-        {/* Sağ Sütun Üst: Karavan Bilgileri ve Teknik Detaylar */}
         <div className={styles.infoWrapper}>
           <div className={styles.cardHeader}>
             <h1 className={styles.title}>{camper.name}</h1>
             <div className={styles.metaRow}>
-              {/* Sarı Yıldız yapısı entegre edildi */}
               <span className={styles.rating}>
                 <span className={styles.starYellow}>★</span> {camper.rating} (
                 {camper.reviews.length} Reviews)
               </span>
               <span className={styles.location}>📍 {camper.location}</span>
             </div>
-            <div className={styles.price}>€{camper.price}</div>
+            <div className={styles.price}>
+              €{Number(camper.price).toFixed(2)}
+            </div>
           </div>
 
           <p className={styles.description}>{camper.description}</p>
@@ -118,9 +124,8 @@ const CamperDetailsPage = () => {
         </div>
       </div>
 
-      {/* ALT BÖLÜM: Sol Yorumlar - Sağ Form (Tam Yan Yana Hizalı) */}
+      {/* ALT BÖLÜM: Yorumlar ve Form */}
       <div className={styles.bottomSection}>
-        {/* Sol Sütun Alt: İncelemeler */}
         <div className={styles.reviewsWrapper}>
           <h2 className={styles.sectionTitleLeft}>Reviews</h2>
           <div className={styles.reviewsList}>
@@ -146,13 +151,11 @@ const CamperDetailsPage = () => {
           </div>
         </div>
 
-        {/* Sağ Sütun Alt: Rezervasyon Formu */}
         <div className={styles.formWrapper}>
           <h3 className={styles.formTitle}>Book your campervan now</h3>
           <p className={styles.formSubtitle}>
             Stay connected! We are always ready to help you.
           </p>
-
           <form onSubmit={handleFormSubmit} className={styles.bookingForm}>
             <input
               type="text"
@@ -174,9 +177,9 @@ const CamperDetailsPage = () => {
               }
               className={styles.inputField}
             />
-            <button type="submit" className={styles.submitBtn}>
+            <Button variant="primary" type="submit">
               Send
-            </button>
+            </Button>
           </form>
         </div>
       </div>

@@ -4,7 +4,7 @@ import styles from "./Loader.module.css";
 const Loader = () => {
   return (
     <div className={styles.spinnerWrapper}>
-      <div className={styles.spinner}></div>
+      <span className={styles.spinner}></span>
     </div>
   );
 };

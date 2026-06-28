@@ -1,33 +1,105 @@
 .btn {
-  padding: 12px 32px;
+  padding: 14px 32px;
   border: none;
   border-radius: 200px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
   line-height: 1.5;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease;
+  /* Genişlik orijinal hali gibi otomatik kalıyor */
+  width: fit-content;
+  min-width: 140px; /* çok küçük buton olmaması için minimum değer */
+  position: relative;
+  overflow: hidden;
 }
+
+/* ===================== VARIANTS ===================== */
 
 .primary {
   background-color: #7a9489;
   color: #ffffff;
+  box-shadow: 0 4px 12px rgba(122, 148, 137, 0.25);
 }
 
 .primary:hover {
-  background-color: #688075; /* Hafif koyu tonu */
+  background-color: #688075;
+  box-shadow: 0 6px 16px rgba(122, 148, 137, 0.35);
+  transform: translateY(-2px);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(122, 148, 137, 0.3);
 }
 
 .secondary {
   background-color: #ffffff;
-  border: 1px solid #e4e7ec; /* RGBA hatası düzeltildi, görseldeki net gri sınır */
+  border: 1.5px solid #e4e7ec;
   color: #101828;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .secondary:hover {
   border-color: #d0d5dd;
   background-color: #f9fafb;
+  transform: translateY(-1px);
+}
+
+/* Ekstra varyantlar */
+.outline {
+  background-color: transparent;
+  border: 1.5px solid #7a9489;
+  color: #7a9489;
+}
+
+.outline:hover {
+  background-color: #7a9489;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.ghost {
+  background-color: transparent;
+  color: #7a9489;
+  padding: 12px 24px;
+  min-width: auto;
+}
+
+.ghost:hover {
+  background-color: rgba(122, 148, 137, 0.08);
+}
+
+/* Disabled */
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 767px) {
+  .btn {
+    padding: 13px 28px;
+    font-size: 15.5px;
+    min-width: 130px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .btn {
+    padding: 14px 30px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .btn {
+    padding: 14px 34px;
+    font-size: 16.5px;
+  }
 }
